@@ -10,7 +10,13 @@ public class User {
 	  private Role role;
 	  
 	  
-	//Since I added this do i need to add the no args constructor ????????
+	
+	public User() {
+		super();
+	}
+
+
+
 	public User(int userId, 
 				String username, 
 				String password, 
@@ -18,6 +24,7 @@ public class User {
 				String lastName, 
 				String email, 
 				Role role) {
+		
 		
 		super();
 		this.userId = userId;

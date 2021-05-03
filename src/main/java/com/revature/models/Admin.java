@@ -1,6 +1,13 @@
 package com.revature.models;
 
 public class Admin extends User {
+	
+	
+	public Admin() {
+		super();
+		
+	}
+
 	public Admin(int userId, 
 			     String username, 
 			     String password, 

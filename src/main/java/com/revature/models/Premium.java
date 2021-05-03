@@ -2,6 +2,12 @@ package com.revature.models;
 
 public class Premium extends User{
 	
+	
+	public Premium() {
+		super();
+		
+	}
+
 	public Premium (int userId, 
 		     String username, 
 		     String password, 
