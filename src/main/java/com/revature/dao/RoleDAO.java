@@ -1,7 +1,8 @@
 package com.revature.dao;
 
+import java.util.List;
+
 import com.revature.models.Role;
-import com.sun.tools.javac.util.List;
 
 public interface RoleDAO {
 	

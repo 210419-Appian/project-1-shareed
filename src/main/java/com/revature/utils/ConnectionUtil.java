@@ -26,17 +26,12 @@ public class ConnectionUtil {
 	
 	
 	public static void main(String [] args) {
-	/*
-	 * Finally block are so commonly used to close resources(open connections outside of Java)
-	 * that there is a short cut to creating a finally block that does it called a `try with resources block`
-	 * that declares the resource to open and then close at(inside the curly braces) the try declaration
-	 */
-	
-	try(Connection conn = ConnectionUtil.getConnection()) {//try to establish a connection
-		System.out.println("Connection Successful");//if connection successful
-	} catch(SQLException e) {//if exception, catch exception and show the exception
-		e.printStackTrace();
+
+		try(Connection conn = ConnectionUtil.getConnection()) {
+			System.out.println("Connection Successful");
+		} catch(SQLException e) {
+			e.printStackTrace();
+		}
 	}
-}
 
 }

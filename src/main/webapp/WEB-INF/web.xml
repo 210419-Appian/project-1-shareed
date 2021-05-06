@@ -9,4 +9,26 @@
     <welcome-file>default.htm</welcome-file>
     <welcome-file>default.jsp</welcome-file>
   </welcome-file-list>
+  
+  
+  <servlet>
+  	<servlet-name>RoleServlet</servlet-name>
+    <servlet-class>com.revature.servlets.RoleServlet</servlet-class>
+  </servlet>
+  
+  <servlet-mapping>
+      <servlet-name>RoleServlet</servlet-name>
+      <url-pattern>/roles</url-pattern>
+  </servlet-mapping>
+  
+  
+  <servlet>
+  	<servlet-name>EmployeeServlet</servlet-name>
+    <servlet-class>com.revature.servlets.EmployeeServlet</servlet-class>
+  </servlet>
+  
+  <servlet-mapping>
+      <servlet-name>EmployeeServlet</servlet-name>
+      <url-pattern>/employee</url-pattern>
+  </servlet-mapping>
 </web-app>
