@@ -6,4 +6,6 @@ public interface AdminDAO {
 	
 			//for admin to update user information
 			public boolean updateUser(User user);
+			
+			//edit user info
 }
