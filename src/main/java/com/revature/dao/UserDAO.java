@@ -5,6 +5,10 @@ import com.revature.models.User;
 
 public interface UserDAO {
 	
+		//add user
+		boolean addUser(User user);
+		
+		
 		//get current user
 		public boolean getCurrentUserInfo(User user);
 		
