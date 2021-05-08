@@ -8,10 +8,10 @@ public interface UserDAO {
 			//add user
 			boolean addUser(User user);
 			
-			public User findById(int id);
+			public User findUserByUserId(int id);
 			
 			//get current user
-			public boolean getCurrentUserInfo(User user);
+			public User findUserByUsername(String username);
 			
 			//update current user
 			public boolean updateCurrentUserInfo(User user);

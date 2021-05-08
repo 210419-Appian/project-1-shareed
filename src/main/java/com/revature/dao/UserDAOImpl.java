@@ -1,6 +1,7 @@
 package com.revature.dao;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -20,7 +21,7 @@ public class UserDAOImpl implements UserDAO {
 	}
 	
 	@Override
-	public User findById(int id) {
+	public User findUserByUserId(int id) {
 		try (Connection conn = ConnectionUtil.getConnection()) {
 
 			String sql = "SELECT * FROM users WHERE user_id = "+id+";";
@@ -57,10 +58,43 @@ public class UserDAOImpl implements UserDAO {
 
 
 	@Override
-	public boolean getCurrentUserInfo(User user) {
-		// TODO Auto-generated method stub
-		return false;
+	public User findUserByUsername(String username) {
+		try (Connection conn = ConnectionUtil.getConnection()) {
+
+			String sqlQuery = "SELECT * FROM users WHERE user_name = ?";
+
+			PreparedStatement statement = conn.prepareStatement(sqlQuery);
+
+			statement.setString(1, username);
+			
+			ResultSet result = statement.executeQuery();
+
+			User user = null;
+
+			while (result.next()) {
+				user = new User(
+						result.getInt("user_id"), 
+						result.getString("user_name"), 
+						result.getString("first_name"), 
+						result.getString("last_name"), 
+						result.getString("user_password"), 
+						result.getString("email"),
+						null
+						);
+				String roleName = result.getString("user_role");
+				if(roleName != null) {
+					user.setRole(roleDAO.findByRoleName(roleName));
+				}
+				
+			}
+			return user;
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return null;
 	}
+
 
 	@Override
 	public boolean updateCurrentUserInfo(User user) {
@@ -77,7 +111,11 @@ public class UserDAOImpl implements UserDAO {
 
 	@Override
 	public String login(String username, String password) {
-		// TODO Auto-generated method stub
+		try (Connection conn = ConnectionUtil.getConnection()) {
+			
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}
 		return null;
 	}
 
