@@ -40,7 +40,7 @@ public class LoginServlet extends HttpServlet {
 			PrintWriter out = res.getWriter();
 			
 			
-			if(userService.checkLoginData(userDTO)) {//if you successfully login
+			if(userService.checkLoginData(userDTO)) {
 				out.print("{message: ok}");
 				HttpSession ses = req.getSession();
 				
@@ -52,8 +52,8 @@ public class LoginServlet extends HttpServlet {
 				out.print(om.writeValueAsString(loggedInUser));
 				
 			} else {
-				res.setStatus(404);
-				out.print("{message: INVALID CREDENTIALS}");//added to body of response
+				res.setStatus(400);
+				out.print("{\"message\": \"Invalid Credentials\"}");//added to body of response
 			}
 
 		}
