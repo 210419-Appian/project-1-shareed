@@ -32,5 +32,15 @@
   </servlet-mapping>
   
   
+  <servlet>
+  	<servlet-name>SuccessServlet</servlet-name>
+  	<servlet-class>com.revature.bank.servlets.SuccessServlet</servlet-class>
+  </servlet>
+  
+  <servlet-mapping>
+  	<servlet-name>SuccessServlet</servlet-name>
+  	<url-pattern>/success</url-pattern>
+  </servlet-mapping>
+  
   
 </web-app>
