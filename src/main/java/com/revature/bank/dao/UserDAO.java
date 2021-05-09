@@ -5,8 +5,8 @@ import com.revature.bank.models.User;
 
 public interface UserDAO {
 	
-			//add user
-			boolean addUser(User user);
+			//add user/ register
+			User addUser(User user);
 			
 			public User findUserByUserId(int id);
 			
@@ -16,15 +16,6 @@ public interface UserDAO {
 			//update current user
 			public boolean updateCurrentUserInfo(User user);
 			
-			//register
-			public String register(String username, 
-								   String password,
-								   String firstName,
-								   String lastName,
-								   String email,
-								   Role role);
 			
-			//login
-			public String login(String username, String password);
-
+			
 }

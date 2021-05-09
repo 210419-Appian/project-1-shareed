@@ -18,12 +18,15 @@ public class EmployeeDAOImpl implements EmployeeDAO {
 	public List<User> getAllUsers() {
 		try(Connection conn = ConnectionUtil.getConnection()) {
 			String sqlQuery = "SELECT * FROM users;";
+			
 			Statement statement = conn.createStatement();
+			
 			ResultSet result = statement.executeQuery(sqlQuery);
+			
 			List<User> list = new ArrayList<>();
 			
 			while(result.next()) {
-				User u = new User(
+				User user = new User(
 						result.getInt("user_id"),
 						result.getString("user_name"),
 						result.getString("user_password"),
@@ -32,11 +35,11 @@ public class EmployeeDAOImpl implements EmployeeDAO {
 						result.getString("email"),
 						null
 						);
-				String roleName = result.getString("user_role");
-				if(roleName != null) {
-					u.setRole(roleDAO.findByRoleName(roleName));
+				Integer roleId = result.getInt("user_roleid");
+				if(roleId != null) {
+					user.setRole(roleDAO.findRoleByRoleId(roleId));
 				}
-				list.add(u);
+				list.add(user);
 			}
 			return list;
 			

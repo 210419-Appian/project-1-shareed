@@ -15,10 +15,10 @@ public class UserDAOImpl implements UserDAO {
 	private static RoleDAO  roleDAO = new RoleDAOImpl();
 
 	@Override
-	public boolean addUser(User user) {
+	public User addUser(User user) {
 		try(Connection conn = ConnectionUtil.getConnection()) {
 			
-			String sqlQuery = "INSERT INTO users(user_name, user_password, first_name, last_name, email, user_role)"
+			String sqlQuery = "INSERT INTO users(user_name, user_password, first_name, last_name, email, user_roleid)"
 								+ "VALUES(?,?,?,?,?,?);";
 			
 			PreparedStatement statement = conn.prepareStatement(sqlQuery);
@@ -30,25 +30,27 @@ public class UserDAOImpl implements UserDAO {
 			statement.setString(++index, user.getFirstName());
 			statement.setString(++index, user.getLastName());
 			statement.setString(++index, user.getEmail());
+			
 			if(user.getRole() != null) {
-				statement.setString(++index, user.getRole().getRole());
+				statement.setInt(++index, user.getRole().getRoleId());
 			} else {
 				statement.setString(++index, null);
 			}
+			
 			statement.execute();
-			return true;
+			
 			
 			} catch(SQLException e) {
 			e.printStackTrace();
 		}
-		return false;
+		return user;
 	}
 	
 	@Override
 	public User findUserByUserId(int id) {
 		try (Connection conn = ConnectionUtil.getConnection()) {
 
-			String sql = "SELECT * FROM users WHERE user_id = "+id+";";
+			String sql = "SELECT * FROM users WHERE user_id = " + id + ";";
 
 			Statement statement = conn.createStatement();
 
@@ -66,17 +68,20 @@ public class UserDAOImpl implements UserDAO {
 						result.getString("email"),
 						null
 						);
-				String roleName = result.getString("user_role");
-				if(roleName != null) {
-					user.setRole(roleDAO.findByRoleName(roleName));
+				//try to see if this works by adding it to the end of the user object
+				Integer roleId = result.getInt("user_roleid");
+				if(roleId != null) {
+					user.setRole(roleDAO.findRoleByRoleId(roleId));
 				}
 				
 			}
+			
 			return user;
 			
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
+		
 		return null;
 	}
 
@@ -105,9 +110,10 @@ public class UserDAOImpl implements UserDAO {
 						result.getString("email"),
 						null
 						);
-				String roleName = result.getString("user_role");
-				if(roleName != null) {
-					user.setRole(roleDAO.findByRoleName(roleName));
+				//try to see if this works by adding it to the end of the user object
+				Integer roleId = result.getInt("user_roleid");
+				if(roleId != null) {
+					user.setRole(roleDAO.findRoleByRoleId(roleId));
 				}
 				
 			}
@@ -126,22 +132,8 @@ public class UserDAOImpl implements UserDAO {
 		return false;
 	}
 
-	@Override
-	public String register(String username, String password, String firstName, String lastName, String email,
-			Role role) {
-		// TODO Auto-generated method stub
-		return null;
-	}
 
-	@Override
-	public String login(String username, String password) {
-		try (Connection conn = ConnectionUtil.getConnection()) {
-			
-		}catch(SQLException e) {
-			e.printStackTrace();
-		}
-		return null;
-	}
+
 
 	
 }

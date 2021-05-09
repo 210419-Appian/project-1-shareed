@@ -9,6 +9,16 @@ public class UserService {
 	
 	private UserDAO userDAO = new UserDAOImpl();
 	
+	public User createUser(User user) {
+		Integer role_id = user.getRole().getRoleId();
+		if(role_id > 0 && role_id < 5 ) {
+			return userDAO.addUser(user);
+		}
+		return null;
+		
+				
+	}
+	
 	public User getOneUser(int id) {
 		return userDAO.findUserByUserId(id);
 	}
