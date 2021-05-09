@@ -16,7 +16,6 @@ public class SuccessServlet extends HttpServlet {
 	protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException{
 		resp.setContentType("application/json");
 		PrintWriter out = resp.getWriter();
-		//gets a currently active session if one exists.
 		HttpSession ses = req.getSession(false);
 		
 		if (ses == null) {

@@ -1,0 +1,1 @@
+- When I logout and there is no user session the code to handle that is broken

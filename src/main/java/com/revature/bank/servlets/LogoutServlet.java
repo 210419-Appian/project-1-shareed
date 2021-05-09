@@ -26,13 +26,12 @@ public class LogoutServlet extends HttpServlet {
 			res.setStatus(200);
 			out.print("{message:\"You have successfully logged out {username}\" + username)");
 			ses.invalidate();
-		} 
-//		else {//this is not working
-//			res.setStatus(400);
-//			out.print("{\"message\": \"There was no user logged into the session\"}");
-//			
-//			
-//		}
+		} else if(ses.equals(null)){//this is not working
+			res.setStatus(400);
+			out.print("{\"message\": \"There was no user logged into the session\"}");
+			
+			
+		}
 		
 	}
 
