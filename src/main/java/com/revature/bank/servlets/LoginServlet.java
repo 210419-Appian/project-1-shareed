@@ -46,8 +46,13 @@ public class LoginServlet extends HttpServlet {
 				
 				User loggedInUser = userService.getUserByUsername(userDTO.username);
 				
+//				ses.setAttribute("username", loggedInUser.getUsername());
+//				ses.setAttribute("role", loggedInUser.getRole().getRole());
+				
+				ses.setAttribute("userId", loggedInUser.getUserId());
 				ses.setAttribute("username", loggedInUser.getUsername());
 				ses.setAttribute("role", loggedInUser.getRole().getRole());
+				
 				res.setContentType("application/json");
 				out.print(om.writeValueAsString(loggedInUser));
 				

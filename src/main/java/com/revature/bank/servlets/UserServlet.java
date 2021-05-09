@@ -84,4 +84,36 @@ public class UserServlet extends HttpServlet {
 		
 		
 		}
+	
+	
+		protected void doPut(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
+			Integer userId = (Integer) req.getSession().getAttribute("userId");
+			String role = (String) req.getSession().getAttribute("role");
+			PrintWriter out = res.getWriter();
+			
+			out.print(userId);
+			
+			BufferedReader reader = req.getReader();
+			
+			StringBuilder sb = new StringBuilder();
+			
+			String line = reader.readLine();
+			
+			while(line != null) {
+				sb.append(line);
+				line = reader.readLine();
+				
+			}
+			
+			String body = new String(sb);
+			User user = om.readValue(body, User.class);
+			
+			if(userId.equals(user.getUserId()) || role.equals("Admin")) {
+				res.setStatus(200);
+				out.print("{\"message\":\"You have access to change this user\"}");
+			} else {
+				res.setStatus(400);
+				out.print("{\"message\":\"You do not have access to change this user\"}");
+			}
+		}
 }
