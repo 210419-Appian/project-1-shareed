@@ -17,5 +17,7 @@ public interface AccountDAO {
 
 	List<Account> getAccountsByAccountUser(int userId);
 
+	public Account updateAccount(Account account);
+
 
 }

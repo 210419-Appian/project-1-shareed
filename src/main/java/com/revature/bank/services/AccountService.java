@@ -32,6 +32,11 @@ public class AccountService {
 	public List<Account> getAccountByAccountUser(int userId) {
 		return accountDAO.getAccountsByAccountUser(userId);
 	}
+	
+	public Account updateAccount(Account account) {
+		return accountDAO.updateAccount(account);
+
+	}
 
 
 

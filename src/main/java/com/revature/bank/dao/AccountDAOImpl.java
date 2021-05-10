@@ -186,11 +186,42 @@ public class AccountDAOImpl implements AccountDAO {
 		
 		return accountList;
 		
-	}catch(SQLException e) {
-		
-		e.printStackTrace();
+		}catch(SQLException e) {
+			
+			e.printStackTrace();
+		}
+			return null;
 	}
-	return null;
-}
+	
+	
+	@Override
+	public Account updateAccount(Account account) {
+		try(Connection conn = ConnectionUtil.getConnection()){
+					
+					String sqlOuery = "UPDATE account SET user_id = ?, balance = ?, status = ?, account_type = ?";
+					
+					PreparedStatement statement = conn.prepareStatement(sqlOuery);
+		
+					
+					int index = 0;
+					statement.setInt(++index, account.getUserId());
+					statement.setDouble(++index, account.getBalance());
+					statement.setInt(++index, account.getStatus().getStatusId());
+					statement.setInt(++index, account.getType().getTypeId());
+					
+					
+					statement.execute();
+					
+			
+					
+					return account;
+					
+				}catch(SQLException e) {
+					e.printStackTrace();
+				}
+				return null;
+				
+			
+			}
 
 }

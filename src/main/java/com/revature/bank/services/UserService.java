@@ -28,7 +28,7 @@ public class UserService {
 				
 	}
 	
-	public boolean updateUser(User user) {
+	public User updateUser(User user) {
 		return userDAO.updateUser(user);
 	}
 	

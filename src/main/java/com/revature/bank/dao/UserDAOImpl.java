@@ -127,17 +127,17 @@ public class UserDAOImpl implements UserDAO {
 
 
 	@Override
-	public boolean updateUser(User user) {
+	public User updateUser(User user) {
 	try(Connection conn = ConnectionUtil.getConnection()) {
 				
-				String sqlQuery = "UPDATE users SET user_id = ?, user_name = ?, user_password = ?, first_name = ?, "
-									+ "last_name = ?, email = ?, user_roleid = ?)";
+				String sqlQuery = "UPDATE users SET user_name = ?, user_password = ?, first_name = ?, "
+									+ "last_name = ?, email = ?, user_roleid = ?";
 								
 				PreparedStatement statement = conn.prepareStatement(sqlQuery);
 				
 				int index = 0;
 				
-				statement.setString(++index, user.getUsername());
+				
 				statement.setString(++index, user.getUsername());
 				statement.setString(++index, user.getPassword());
 				statement.setString(++index, user.getFirstName());
@@ -147,19 +147,20 @@ public class UserDAOImpl implements UserDAO {
 				if(user.getRole() != null) {
 					statement.setInt(++index, user.getRole().getRoleId());
 				} else {
-					statement.setString(++index, null);
+					statement.setInt(++index, 0);
 				}
 				
 				statement.execute();
 				
-				return true;
+				return user;
 				
 				} catch(SQLException e) {
 				e.printStackTrace();
 			}
 			
-			return false;
+			return null;
 }
+
 
 
 

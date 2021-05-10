@@ -165,6 +165,36 @@ public class FrontControllerServlet extends HttpServlet {
 					} else {
 						System.out.println("What are you looking for");
 					}
+				} else if(req.getMethod().equals("PUT")) {
+			    	if(sections.length == 1) {
+						String role = (String) req.getSession().getAttribute("role");
+						
+						if(role.equals("Admin")) {
+							
+							BufferedReader reader = req.getReader();
+							
+							StringBuilder sb = new StringBuilder();
+							
+							String line = reader.readLine();
+							
+							while(line != null) {
+					            sb.append(line);
+					            line= reader.readLine();
+					        }
+							
+							String body = new String(sb);
+							
+							User newUserInfo = om.readValue(body, User.class);
+							
+							User newUser = userService.updateUser(newUserInfo);
+							PrintWriter out1 = res.getWriter();
+							out1.print(newUser);
+							
+							
+						
+							}
+					
+						}
 				}
 				break;
 		
@@ -210,16 +240,46 @@ public class FrontControllerServlet extends HttpServlet {
 						int newAccount = accountService.addAccount(newAccountInfo);
 						PrintWriter out1 = res.getWriter();
 						out1.print(newAccount);
-					
-				}
+						}
 				
-			}
+				}
+					
+			}else if(req.getMethod().equals("PUT")) {
+						
+				    	if(sections.length == 1) {
+						
+							String role = (String) req.getSession().getAttribute("role");
+							
+							if(role.equals("Admin")) {
+								
+								BufferedReader reader = req.getReader();
+								
+								StringBuilder sb = new StringBuilder();
+								
+								String line = reader.readLine();
+								
+								while(line != null) {
+						            sb.append(line);
+						            line= reader.readLine();
+						        }
+								
+								String body = new String(sb);
+								
+								Account newAccountInfo = om.readValue(body, Account.class);
+								
+								Account newAccount = accountService.updateAccount(newAccountInfo);
+								PrintWriter out1 = res.getWriter();
+								out1.print(newAccount);
+							
+								}
+				    	}
+		    }
 			break;
 			
 			}
 		}
 			
-	}
+	
 		
 		
 	

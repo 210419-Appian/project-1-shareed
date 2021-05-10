@@ -13,7 +13,7 @@ public interface UserDAO {
 			public User findUserByUsername(String username);
 			
 			//update current user
-			public boolean updateUser(User user);
+			public User updateUser(User user);
 			
 			
 			
