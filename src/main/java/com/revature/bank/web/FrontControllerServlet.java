@@ -242,6 +242,16 @@ public class FrontControllerServlet extends HttpServlet {
 						out1.print(newAccount);
 						}
 				
+				}else if(sections.length == 2) {
+					if(sections[1].equals("deposit")) {
+//						int id = Integer.parseInt(sections[2]);
+//						accountControl.getAccountByAccountStatus(req, res, id);
+//						
+					}else if(sections[1].equals("transfer")) {
+						
+					}else if(sections[1].equals("withdraw")) {
+						
+					}
 				}
 					
 			}else if(req.getMethod().equals("PUT")) {
