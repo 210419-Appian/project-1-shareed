@@ -14,29 +14,23 @@ public class UserService {
 		if(role_id > 0 && role_id < 5 ) {
 			return userDAO.addUser(user);
 		}
-		return null;	
+		return null;
+		
+				
 	}
 	
-	
-	
-	public User getOneUser(int id) {
+	public User getUser(int id) {
 		return userDAO.findUserByUserId(id);
 	}
-	
-	
 	
 	public User getUserByUsername(String username) {
 		return userDAO.findUserByUsername(username);
 				
 	}
 	
-	
-	
-	public boolean UpdateCurrentUser(User user) {
-		return userDAO.updateCurrentUserInfo(user);
+	public boolean updateUser(User user) {
+		return userDAO.updateUser(user);
 	}
-	
-	
 	
 	public boolean checkLoginData(UserDTO userDTO) {
 		User checkedUser = getUserByUsername(userDTO.username);

@@ -127,38 +127,39 @@ public class UserDAOImpl implements UserDAO {
 
 
 	@Override
-	public boolean updateCurrentUserInfo(User user) {
-		try(Connection conn = ConnectionUtil.getConnection()) {
-			
-			String sqlQuery = "UPDATE users SET user_id = ?, user_name = ?, user_password = ?, first_name = ?, "
-								+ "last_name = ?, email = ?, user_roleid = ?)";
-							
-			PreparedStatement statement = conn.prepareStatement(sqlQuery);
-			
-			int index = 0;
-			
-			statement.setString(++index, user.getUsername());
-			statement.setString(++index, user.getPassword());
-			statement.setString(++index, user.getFirstName());
-			statement.setString(++index, user.getLastName());
-			statement.setString(++index, user.getEmail());
-			
-			if(user.getRole() != null) {
-				statement.setInt(++index, user.getRole().getRoleId());
-			} else {
-				statement.setString(++index, null);
+	public boolean updateUser(User user) {
+	try(Connection conn = ConnectionUtil.getConnection()) {
+				
+				String sqlQuery = "UPDATE users SET user_id = ?, user_name = ?, user_password = ?, first_name = ?, "
+									+ "last_name = ?, email = ?, user_roleid = ?)";
+								
+				PreparedStatement statement = conn.prepareStatement(sqlQuery);
+				
+				int index = 0;
+				
+				statement.setString(++index, user.getUsername());
+				statement.setString(++index, user.getUsername());
+				statement.setString(++index, user.getPassword());
+				statement.setString(++index, user.getFirstName());
+				statement.setString(++index, user.getLastName());
+				statement.setString(++index, user.getEmail());
+				
+				if(user.getRole() != null) {
+					statement.setInt(++index, user.getRole().getRoleId());
+				} else {
+					statement.setString(++index, null);
+				}
+				
+				statement.execute();
+				
+				return true;
+				
+				} catch(SQLException e) {
+				e.printStackTrace();
 			}
 			
-			statement.execute();
-			
-			return true;
-			
-			} catch(SQLException e) {
-			e.printStackTrace();
-		}
-		
-		return false;
-	}
+			return false;
+}
 
 
 

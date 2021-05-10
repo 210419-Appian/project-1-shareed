@@ -1,6 +1,5 @@
 package com.revature.bank.dao;
 
-import com.revature.bank.models.Role;
 import com.revature.bank.models.User;
 
 public interface UserDAO {
@@ -14,7 +13,7 @@ public interface UserDAO {
 			public User findUserByUsername(String username);
 			
 			//update current user
-			public boolean updateCurrentUserInfo(User user);
+			public boolean updateUser(User user);
 			
 			
 			
