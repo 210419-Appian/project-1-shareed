@@ -8,21 +8,11 @@ public class Employee extends User {
 		
 	}
 
-	public Employee(int userId, 
-				    String username, 
-				    String password, 
-				    String firstName, 
-				    String lastName, 
-				    String email,
-				     Role role)  {
+	public Employee(int userId, String username, String password, String firstName, 
+				    String lastName, String email,Role role)  {
 		
-		super(userId, 
-			  username, 
-			  password, 
-			  firstName, 
-			  lastName, 
-			  email, 
-			  role);
+		super(userId, username, password, firstName, 
+			  lastName, email, role);
 		
 	}
 }
