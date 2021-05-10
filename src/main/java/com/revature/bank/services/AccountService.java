@@ -24,6 +24,10 @@ public class AccountService {
 	public Account getAccountByAccountId(int id) {
 		return accountDAO.getAccountByAccountId(id);
 	}
+	
+	public List<Account> getAccountByAccountStatus(int status_id) {
+		return accountDAO.getAccountsByAccountStatus(status_id);
+	}
 
 
 

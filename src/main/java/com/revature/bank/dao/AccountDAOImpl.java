@@ -117,4 +117,42 @@ public class AccountDAOImpl implements AccountDAO {
 		
 		return null;
 	}
+	
+	
+	@Override
+	public List<Account> getAccountsByAccountStatus(int accountId) {
+			try(Connection conn = ConnectionUtil.getConnection()){
+			
+			AccountTypeDAOImpl accountTypeDAOImpl = new AccountTypeDAOImpl();
+			AccountStatusDAOImpl accountStatusDAOImpl = new AccountStatusDAOImpl();
+			
+			String sqlQuery = "SELECT * FROM account WHERE status = ?";
+			
+			PreparedStatement statement = conn.prepareStatement(sqlQuery);
+			
+			statement.setInt(1, accountId);
+			
+			ResultSet result = statement.executeQuery();
+			
+			List<Account> accountList = new ArrayList<>();;
+			
+			while(result.next()) {
+				Account account = new Account(
+						result.getInt("account_id"),
+						result.getInt("user_id"),
+						result.getDouble("balance"),
+						accountStatusDAOImpl.findById(result.getInt("status")),
+						accountTypeDAOImpl.findById(result.getInt("account_type")));
+					accountList.add(account);
+			}
+			
+			return accountList;
+			
+		}catch(SQLException e) {
+			
+			e.printStackTrace();
+		}
+			
+		return null;
+	}
 }

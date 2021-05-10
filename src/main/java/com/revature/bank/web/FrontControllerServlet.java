@@ -177,6 +177,10 @@ public class FrontControllerServlet extends HttpServlet {
 					int id = Integer.parseInt(sections[1]);
 					accountControl.getAccountsByAccountId(req, res, id);
 
+				} else if(sections.length == 3) {
+					int id = Integer.parseInt(sections[2]);
+
+					accountControl.getAccountByAccountStatus(req, res, id);
 				}
 			} else if(req.getMethod().equals("POST")) {
 				if(sections.length == 1) {
