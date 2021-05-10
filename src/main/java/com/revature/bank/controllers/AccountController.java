@@ -96,6 +96,20 @@ public class AccountController {
 		
 	}
 	
+	
+	public void deposit(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
+		
+	}
+	
+	public void transfer(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
+			
+	}
+	
+	public void withdraw(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
+		
+	}
+	
+	
 
 
 }

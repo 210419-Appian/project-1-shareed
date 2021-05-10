@@ -242,14 +242,36 @@ public class FrontControllerServlet extends HttpServlet {
 						out1.print(newAccount);
 						}
 				
-				}else if(sections.length == 2) {
+				}else if(sections.length == 2) {//not yet working
 					if(sections[1].equals("deposit")) {
-//						int id = Integer.parseInt(sections[2]);
-//						accountControl.getAccountByAccountStatus(req, res, id);
-//						
+						accountControl.deposit(req, res);
+						BufferedReader reader = req.getReader();
+
+						StringBuilder sb = new StringBuilder();
+//						boolean success = false;
+						
+						String line = reader.readLine();
+						
+						while(line != null) {
+							sb.append(line);
+							line = reader.readLine();
+						}
+						
+						String body = new String(sb);
+						HttpSession ses1 = req.getSession(false);
+						String role = (String) req.getSession().getAttribute("role");
+						Integer userId = (Integer) req.getSession().getAttribute("user_id");
+						User user = om.readValue(body, User.class);
+						if(role.equals("Admin" ) || userId.equals(user.getUserId())) {
+							PrintWriter out9 = res.getWriter();
+							out9.print(body);
+						}
+						
 					}else if(sections[1].equals("transfer")) {
+						accountControl.transfer(req, res);
 						
 					}else if(sections[1].equals("withdraw")) {
+						accountControl.withdraw(req, res);
 						
 					}
 				}
