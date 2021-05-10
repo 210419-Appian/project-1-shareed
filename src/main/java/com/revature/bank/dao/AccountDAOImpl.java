@@ -120,7 +120,7 @@ public class AccountDAOImpl implements AccountDAO {
 	
 	
 	@Override
-	public List<Account> getAccountsByAccountStatus(int accountId) {
+	public List<Account> getAccountsByAccountStatus(int statusId) {
 			try(Connection conn = ConnectionUtil.getConnection()){
 			
 			AccountTypeDAOImpl accountTypeDAOImpl = new AccountTypeDAOImpl();
@@ -130,7 +130,7 @@ public class AccountDAOImpl implements AccountDAO {
 			
 			PreparedStatement statement = conn.prepareStatement(sqlQuery);
 			
-			statement.setInt(1, accountId);
+			statement.setInt(1, statusId);
 			
 			ResultSet result = statement.executeQuery();
 			
@@ -155,4 +155,42 @@ public class AccountDAOImpl implements AccountDAO {
 			
 		return null;
 	}
+	
+
+	@Override
+	public List<Account> getAccountsByAccountUser(int userId) {
+		try(Connection conn = ConnectionUtil.getConnection()){
+		
+		AccountStatusDAOImpl accountStatusDAOImpl = new AccountStatusDAOImpl();
+		AccountTypeDAOImpl accountTypeDAOImpl = new AccountTypeDAOImpl();
+		
+		String sqlQuery = "SELECT * FROM account WHERE user_id = ?";
+		
+		PreparedStatement statement = conn.prepareStatement(sqlQuery);
+		
+		statement.setInt(1, userId);
+		
+		ResultSet result = statement.executeQuery();
+		
+		List<Account> accountList = new ArrayList<>();
+		
+		while(result.next()) {
+			Account account = new Account(
+					result.getInt("account_id"),
+					result.getInt("user_id"),
+					result.getDouble("balance"),
+					accountStatusDAOImpl.findById(result.getInt("status")),
+					accountTypeDAOImpl.findById(result.getInt("account_type")));
+			accountList.add(account);
+		}
+		
+		return accountList;
+		
+	}catch(SQLException e) {
+		
+		e.printStackTrace();
+	}
+	return null;
+}
+
 }

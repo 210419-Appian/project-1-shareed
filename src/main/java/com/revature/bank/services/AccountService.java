@@ -28,6 +28,11 @@ public class AccountService {
 	public List<Account> getAccountByAccountStatus(int status_id) {
 		return accountDAO.getAccountsByAccountStatus(status_id);
 	}
+	
+	public List<Account> getAccountByAccountUser(int userId) {
+		return accountDAO.getAccountsByAccountUser(userId);
+	}
+
 
 
 

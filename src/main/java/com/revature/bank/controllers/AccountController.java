@@ -58,19 +58,39 @@ public class AccountController {
 		}
 	
 	
-public void getAccountByAccountStatus(HttpServletRequest req, HttpServletResponse res, int status_id) throws ServletException, IOException {
+	public void getAccountByAccountStatus(HttpServletRequest req, HttpServletResponse res, int status_id) throws ServletException, IOException {
+			
+			AccountService accountService = new AccountService();
+			PrintWriter out = res.getWriter();
+			
+			String role = (String) req.getSession().getAttribute("role");
+			
+			if(role == null) {
+				out.print("<h1>YOU DO NOT HAVE ACCESS TO VIEW THIS ACCOUNT</h1>");
+			} else if(role.equals("Admin") || role.equals("Employee")) {
+	
+				List<Account> statusAccount = accountService.getAccountByAccountStatus(status_id);
+				String json = om.writeValueAsString(statusAccount);
+				out.print(json);
+			} 
+			
+		}
+
+
+	public void getAccountByAccountUser(HttpServletRequest req, HttpServletResponse res, int user_id) throws ServletException, IOException {
 		
 		AccountService accountService = new AccountService();
 		PrintWriter out = res.getWriter();
 		
 		String role = (String) req.getSession().getAttribute("role");
+		Integer currentUserId = (Integer) req.getSession().getAttribute("userId");
 		
 		if(role == null) {
 			out.print("<h1>YOU DO NOT HAVE ACCESS TO VIEW THIS ACCOUNT</h1>");
-		} else if(role.equals("Admin") || role.equals("Employee")) {
-
-			List<Account> statusAccount = accountService.getAccountByAccountStatus(status_id);
-			String json = om.writeValueAsString(statusAccount);
+		} else if(role.equals("Admin") || role.equals("Employee") || currentUserId.equals(user_id)) {
+	
+			List<Account> userAccounts = accountService.getAccountByAccountUser(user_id);
+			String json = om.writeValueAsString(userAccounts);
 			out.print(json);
 		} 
 		
