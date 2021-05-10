@@ -32,6 +32,7 @@ public class AccountDAOImpl implements AccountDAO {
 			while(result.next()) {
 				Account account = new Account(
 						result.getInt("account_id"),
+						result.getInt("user_id"),
 						result.getDouble("balance"),
 						accountStatusDAOImpl.findById(result.getInt("status")),
 						accountTypeDAOImpl.findById(result.getInt("account_type")));
@@ -76,5 +77,44 @@ public class AccountDAOImpl implements AccountDAO {
 		
 		return account.getAccountId();
 		
+	}
+	
+	
+	
+	@Override
+	public Account getAccountByAccountId(int id) {
+		try(Connection conn = ConnectionUtil.getConnection()){
+			
+			AccountTypeDAOImpl accountTypeDAOImpl = new AccountTypeDAOImpl();
+			AccountStatusDAOImpl accountStatusDAOImpl = new AccountStatusDAOImpl();
+			
+			String sql = "SELECT * FROM account WHERE account_id = ?";
+			
+			PreparedStatement statement = conn.prepareStatement(sql);
+			
+			statement.setInt(1, id);
+			
+			ResultSet result = statement.executeQuery();
+			
+			Account account = null;
+			
+			while(result.next()) {
+				account = new Account(
+						result.getInt("account_id"),
+						result.getInt("user_id"),
+						result.getDouble("balance"),
+						accountStatusDAOImpl.findById(result.getInt("status")),
+						accountTypeDAOImpl.findById(result.getInt("account_type")));
+				
+			}
+			
+			return account;
+			
+		}catch(SQLException e) {
+			
+			e.printStackTrace();
+		}
+		
+		return null;
 	}
 }

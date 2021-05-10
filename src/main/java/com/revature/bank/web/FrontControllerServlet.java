@@ -25,11 +25,9 @@ public class FrontControllerServlet extends HttpServlet {
 	private String BaseURL = null;
 	private UserController userControl = new UserController();
 	private AccountController accountControl = new AccountController();
-	
 	UserService userService = new UserService();
 	AccountService accountService = new AccountService();
 	ObjectMapper om = new ObjectMapper();
-	
 	
 	
 	@Override
@@ -39,7 +37,7 @@ public class FrontControllerServlet extends HttpServlet {
 	
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException{
-res.setContentType("application/json");
+		res.setContentType("application/json");
 		
 //		res.setStatus(404); 
 		
@@ -82,6 +80,7 @@ res.setContentType("application/json");
 							res.setStatus(201);
 							res.setContentType("application/json");
 							out.print(om.writeValueAsString(newUser));
+							
 						} else {
 							res.setStatus(422);
 							res.setContentType("application/json");
@@ -131,7 +130,7 @@ res.setContentType("application/json");
 						
 					} else {
 						res.setStatus(400);
-						out.print("{\"message\": \"Invalid Credentials\"}");
+						out.print("{\"message\": \"Invalid Credentials\"}");//added to body of response
 					}
 				
 				}
@@ -147,6 +146,7 @@ res.setContentType("application/json");
 					res.setStatus(200);
 					out.print("{message:\"You have successfully logged out " + username + "\"}");
 					ses.invalidate();
+					
 				}else if (ses.equals(null)) {//this is not working
 					res.setStatus(400);
 				    out.print("{\"message\": \"There was no user logged into the session\"}");
@@ -154,28 +154,32 @@ res.setContentType("application/json");
 				}
 			break;
 			case "users":
-			if(req.getMethod().equals("GET")) {
-				if(sections.length == 1) {
-					userControl.getAllUsers(req, res);
-				}else {
-					System.out.println("What are you looking for");
+				if(req.getMethod().equals("GET")) {
+					if(sections.length == 1) {
+						userControl.getAllUsers(req, res);
+						
+					}else if(sections.length == 2) {
+						int id = Integer.parseInt(sections[1]);
+						userControl.getUserById(req, res, id);
+						
+					} else {
+						System.out.println("What are you looking for");
+					}
 				}
-			}
-			break;
+				break;
 		
 			case "accounts":
 			if(req.getMethod().equals("GET")) {
 				if(sections.length == 1) {
 					accountControl.getAllAccounts(req, res);
+					
 				}else if(sections.length == 2) {
 					int id = Integer.parseInt(sections[1]);
-					
+					accountControl.getAccountsByAccountId(req, res, id);
 
 				}
 			} else if(req.getMethod().equals("POST")) {
 				if(sections.length == 1) {
-					
-					
 					String role = (String) req.getSession().getAttribute("role");
 					
 					if(role.equals("Admin") || role.equals("Employee")) {
@@ -206,29 +210,30 @@ res.setContentType("application/json");
 			
 			}
 		}
-		
+			
 	}
-	
+		
+		
 	
 	
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		
-		doGet(req, resp);
+		doGet(req, resp);//sends the request to the doGet Method
 		
 	}
 	
 	@Override
 	protected void doPut(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		
-		doGet(req, resp);
+		doGet(req, resp);//sends the request to the doGet Method
 		
 	}
 	
 	
 	protected void doPatch(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		
-		doGet(req, resp);
+		doGet(req, resp);//sends the request to the doGet Method
 		
 	}
 	
@@ -242,7 +247,10 @@ res.setContentType("application/json");
 		}
 		
 	}
+
 }
+
+
 
 
 

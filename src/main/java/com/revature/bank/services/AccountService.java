@@ -20,6 +20,10 @@ public class AccountService {
 			return accountDAO.addAccount(account);
 
 	}
+	
+	public Account getAccountByAccountId(int id) {
+		return accountDAO.getAccountByAccountId(id);
+	}
 
 
 

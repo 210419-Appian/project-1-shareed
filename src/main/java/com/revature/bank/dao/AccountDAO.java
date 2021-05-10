@@ -11,4 +11,6 @@ public interface AccountDAO {
 	
 	public List<Account> getAllAccounts();
 
+	Account getAccountByAccountId(int id);
+
 }

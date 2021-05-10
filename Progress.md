@@ -44,3 +44,12 @@
 
 - Get all users(Employees)
     * Employees and Admin can view all customer information, but not modify in any way
+
+### BUGS
+
+- When I logout and there is no user session the code to handle that is broken
+
+- There is something going on with my databse, when I try to login I have to use the value in the first name field for the password
+
+- when i add a account i get a 0 back but the user is being added
+- When I get the list of users back the id field value is 0

@@ -37,6 +37,26 @@ public class AccountController {
 			} 
 			
 	}
+	
+	public void getAccountsByAccountId(HttpServletRequest req, HttpServletResponse res, int id) throws ServletException, IOException {
+			
+			AccountService employeeService = new AccountService();
+			PrintWriter out = res.getWriter();
+			
+			String role = (String) req.getSession().getAttribute("role");
+			Integer userId = (Integer) req.getSession().getAttribute("userId");
+			
+			if(role == null) {
+				out.print("<h1>YOU DO NOT HAVE ACCESS TO VIEW THIS ACCOUNT</h1>");
+				
+			} else if(role.equals("Admin") || role.equals("Employee") || userId.equals(id)) {
+				Account userAccount = employeeService.getAccountByAccountId(id);
+				String json = om.writeValueAsString(userAccount);
+				out.print(json);
+			} 
+			
+		}
+	
 
 
 }
