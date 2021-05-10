@@ -265,6 +265,11 @@ public class FrontControllerServlet extends HttpServlet {
 						if(role.equals("Admin" ) || userId.equals(user.getUserId())) {
 							PrintWriter out9 = res.getWriter();
 							out9.print(body);
+						}else {
+							res.setStatus(401);
+							res.setContentType("application/json");
+							PrintWriter out10 = res.getWriter();
+							out10.print("{\"message\":\"The requested action is no permitted\"}");
 						}
 						
 					}else if(sections[1].equals("transfer")) {
@@ -273,7 +278,7 @@ public class FrontControllerServlet extends HttpServlet {
 					}else if(sections[1].equals("withdraw")) {
 						accountControl.withdraw(req, res);
 						
-					}
+					} 
 				}
 					
 			}else if(req.getMethod().equals("PUT")) {
